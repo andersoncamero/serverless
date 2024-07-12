@@ -21,7 +21,6 @@ jobs:
       - name: NPM - Install dependencies
         if: steps.cached-npm-dependencies.outputs.cache-hit != 'true'
         run: "npm install"
-
       - name: Deploy using sls
         run: "npx sls deploy"
         env:
@@ -37,11 +36,4 @@ jobs:
             LOGGING: ${{secrets.LOGGING}}
             SSL: ${{secrets.SSL}}
 
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: |
-            Your SLS App was deployed!
-            Awesome :D
 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
