@@ -25,15 +25,6 @@ provider:
         DIALECT: ${ssm:/DIALECT}
         LOGGING: ${ssm:/LOGGING}
         SSL: ${ssm:/SSL}
-    # BUCKET: bucket-serverless-course-123
-    # USER_NAME: dbstaging_plataforma
-    # PASSWORD: Q@QbE5%Ekx@!
-    # DATABASE: horus_staging
-    # HOST: db-hse-staging.ccti8vozmyl6.us-east-2.rds.amazonaws.com
-    # DATABASE_PORT: 5432
-    # DIALECT: postgres
-    # LOGGING: false
-    # SSL: false
 
 plugins:
   - serverless-offline
