@@ -92,7 +92,7 @@ const resizer = async (imgBody, newSize, dstBucket, fileKey, projectId) => {
         const extractedUrl = url.split('?')[0];
         console.log(extractedUrl);
         const project = await models.Project.update({ img: extractedUrl }, { where: { id: projectId } })
-
+        console.log(project);
     } catch (error) {
         console.log(error);
         return;
