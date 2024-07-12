@@ -22,11 +22,6 @@ jobs:
         if: steps.cached-npm-dependencies.outputs.cache-hit != 'true'
         run: "npm install"
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: nodejsdeps
-          path: app/
-
       - name: Deploy using sls
         run: "npx sls deploy"
         env:
