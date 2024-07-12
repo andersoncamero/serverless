@@ -39,8 +39,6 @@ jobs:
             DIALECT: ${{secrets.DIALECT}}
             LOGGING: ${{secrets.LOGGING}}
             SSL: ${{secrets.SSL}}
-            AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-            AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
