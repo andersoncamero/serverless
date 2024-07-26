@@ -5,13 +5,10 @@ provider:
   runtime: nodejs20.x
   apiGateway:
     apiKeys:
-      - crud-serverless-users-apiKey
+      - hse-AWS-gen-api-key
   iam:
     role:
       statements:
-        - Effect: Allow
-          Action: "dynamodb:*"
-          Resource: arn:aws:dynamodb:us-east-1:471893938953:table/usersTable
         - Effect: Allow
           Action: "s3:*"
           Resource: arn:aws:s3:::bucket-serverless-course-123/*
@@ -35,73 +32,7 @@ package:
   patterns:
     - "!*/**"
 
-custom:
-  dynamodb:
-    # If you only want to use DynamoDB Local in some stages, declare them here
-    stages:
-      - dev
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-    # Uncomment only if you already have a DynamoDB running locally
-    # noStart: true
-
 functions:
-  get-users:
-    handler: getusers/handler.getUsers
-    package:
-      patterns:
-        - "getusers/handler.js"
-    events:
-      - http:
-          path: users/{id}
-          method: GET
-          request:
-            parameters:
-              paths:
-                id: true
-  create-users:
-    handler: createUsers/handler.createUsers
-    package:
-      patterns:
-        - "createUsers/handler.js"
-    events:
-      - http:
-          path: users
-          method: POST
-          request:
-            schemas:
-              application/json: ${file(schemas/user-schema.json)}
-  update-users:
-    handler: updateUsers/handler.updateUsers
-    package:
-      patterns:
-        - "updateUsers/handler.js"
-    events:
-      - http:
-          path: users/{id}
-          method: PATCH
-          request:
-            parameters:
-              paths:
-                id: true
-            schemas:
-              application/json: ${file(schemas/user-schema.json)}
-  delete-users:
-    handler: deleteUsers/handler.deleteUsers
-    runtime: python3.8
-    package:
-      patterns:
-        - "deleteUsers/handler.py"
-    events:
-      - http:
-          path: users/{id}
-          method: DELETE
-          request:
-            parameters:
-              paths:
-                id: true
   signedURL:
     handler: signedurl/handler.signedS3URL
     package:
@@ -133,15 +64,6 @@ functions:
           existing: true
           rules:
             - prefix: upload/
-  get-image:
-    handler: getimage/handler.getImage
-    package:
-      patterns:
-        - "getimage/handler.js"
-    events:
-      - http:
-          path: image
-          method: GET
 
 
 # layers:
@@ -154,19 +76,6 @@ functions:
 
 resources:
   Resources:
-    usersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: usersTable
-        AttributeDefinitions:
-          - AttributeName: pk
-            AttributeType: S
-        KeySchema:
-          - AttributeName: pk
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
     S3Bucket:
       Type: "AWS::S3::Bucket"
       Properties:
