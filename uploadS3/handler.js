@@ -91,8 +91,11 @@ const resizer = async (imgBody, newSize, dstBucket, fileKey, projectId) => {
         const url = await getSignedUrl(s3, command)
         const extractedUrl = url.split('?')[0];
         console.log(extractedUrl);
+        const newproject = await models.Project.findByPk(projectId)
+        console.log('project: ', newproject.dataValues.name);
+        
         const project = await models.Project.update({ img: extractedUrl }, { where: { id: projectId } })
-        console.log(project);
+        console.log('update: ',project);
     } catch (error) {
         console.log(error);
         return;
